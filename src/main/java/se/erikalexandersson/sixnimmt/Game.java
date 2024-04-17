@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,6 +44,9 @@ public class Game {
 			board.cards[1][0] = deck.pop();
 			board.cards[2][0] = deck.pop();
 			board.cards[3][0] = deck.pop();
+			
+//			System.out.println("Board starting state: ");
+//			board.printBoard();
 
 			// Continue until all cards are played
 			for (int i = 0; i < 10; i++) {
@@ -50,10 +54,8 @@ public class Game {
 				// Ask each player for a card
 				Map<Player, Integer> playedCards = new HashMap<>();
 				for (Player player : playerScore.keySet()) {
-					playedCards.put(player, player.chooseCard(board));
+					playedCards.put(player, player.getCardFromPlayer(board));
 				}
-
-				int lowest = board.getLowestCard();
 
 				// Sort cards by order
 				playedCards.entrySet().stream().sorted((e1, e2) -> Integer.compare(e1.getValue(), e2.getValue()))
@@ -62,6 +64,10 @@ public class Game {
 							// Play cards
 							Player player = e.getKey();
 							int playedCard = e.getValue();
+							
+							int lowest = board.getLowestCard();
+							
+//							System.out.println(String.format("Player %s plays card %d", player.getName(), playedCard));
 
 							// If first card is lower than all the other top
 							// cards on board, ask player to take a pile
@@ -85,6 +91,9 @@ public class Game {
 									playerScore.put(player, playerScore.get(player) + Card.getScore(scoredCards));
 								}
 							}
+							
+//							System.out.println("Board is now: ");
+//							board.printBoard();
 						});
 			}
 
@@ -102,4 +111,9 @@ public class Game {
 		return playerScore.entrySet().stream().filter(e -> e.getValue().intValue() == lowestScore).map(e -> e.getKey())
 				.collect(Collectors.toList());
 	}
+
+	public Map<Player, Integer> getPlayerScore() {
+		return playerScore;
+	}
+	
 }

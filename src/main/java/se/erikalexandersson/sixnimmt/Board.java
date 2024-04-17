@@ -6,8 +6,12 @@ import java.util.List;
 public class Board {
 
 	public int[][] cards;
+	public int numRows;
+	public int maxCardsInRow;
 
 	public Board() {
+		numRows = 4;
+		maxCardsInRow = 5;
 		cards = new int[4][];
 		cards[0] = new int[] { 0, 0, 0, 0, 0 };
 		cards[1] = new int[] { 0, 0, 0, 0, 0 };
@@ -80,12 +84,50 @@ public class Board {
 		return scoredCards;
 	}
 
+	public int getScoreForRow(int row) {
+		List<Integer> scoredCards = new ArrayList<>();
+		for (int j = 0; j < 4; j++) {
+			int card = cards[row][j];
+			if (card > 0) {
+				scoredCards.add(card);
+			} else {
+				break;
+			}
+		}
+		return Card.getScore(scoredCards);
+	}
+
+	public Integer getLowestScoringRow() {
+		int min = Integer.MAX_VALUE;
+		int minRow = 0;
+		for (int i = 0; i < 4; i++) {
+			int rowScore = getScoreForRow(i);
+			if (rowScore < min) {
+				min = rowScore;
+				minRow = i;
+			}
+		}
+		return minRow;
+	}
+
 	public void addCardToRow(int row, int playedCard) {
 		for (int j = 4; j >= 0; j--) {
 			if (cards[row][j - 1] > 0) {
 				cards[row][j] = playedCard;
 				break;
 			}
+		}
+	}
+
+	public void printBoard() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 5; j++) {
+				int card = cards[i][j];
+				if (card > 0) {
+					System.out.print(String.format("%3d ", card));
+				}
+			}
+			System.out.println();
 		}
 	}
 }

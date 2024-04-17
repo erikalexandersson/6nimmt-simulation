@@ -1,20 +1,19 @@
 package se.erikalexandersson.sixnimmt;
 
-public class RandomPlayer extends Player {
+public class HighPlayer extends Player {
 
-	public RandomPlayer(String name) {
+	public HighPlayer(String name) {
 		super(name);
 	}
 
 	@Override
 	public int chooseCard(Board board) {
-		return Util.getRandomFromSet(currentCards);
+		return currentCards.stream().max(Integer::compare).get();
 	}
 
 	@Override
 	public int chooseRow(Board board) {
-//		return ThreadLocalRandom.current().nextInt(board.cards.length);
 		return board.getLowestScoringRow();
 	}
-	
+
 }
