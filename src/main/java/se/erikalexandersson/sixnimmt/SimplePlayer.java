@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public class SimplePlayer extends Player {
 
-	public SimplePlayer(String name) {
-		super(name);
+	public SimplePlayer(int id) {
+		super(id);
 	}
 
 	/**

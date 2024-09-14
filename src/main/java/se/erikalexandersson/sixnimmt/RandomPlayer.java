@@ -2,8 +2,8 @@ package se.erikalexandersson.sixnimmt;
 
 public class RandomPlayer extends Player {
 
-	public RandomPlayer(String name) {
-		super(name);
+	public RandomPlayer(int id) {
+		super(id);
 	}
 
 	@Override

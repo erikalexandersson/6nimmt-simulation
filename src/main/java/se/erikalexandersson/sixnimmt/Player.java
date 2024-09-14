@@ -6,14 +6,16 @@ import java.util.Set;
 
 public abstract class Player {
 
-	protected String name;
+	protected int id;
 	protected Set<Integer> memory;
 	protected Set<Integer> currentCards;
+	protected int maxHandSize;
 
-	public Player(String name) {
-		this.name = name;
+	public Player(int id) {
+		this.id = id;
 		this.memory = new HashSet<>();
 		this.currentCards = new HashSet<>();
+		this.maxHandSize = 10;
 	}
 
 	public abstract int chooseCard(Board board);
@@ -34,15 +36,23 @@ public abstract class Player {
 		return card;
 	}
 
+	public int getMaxHandSize() {
+		return maxHandSize;
+	}
+
+	public void setMaxHandSize(int maxHandSize) {
+		this.maxHandSize = maxHandSize;
+	}
+
 	public String getName() {
-		return name;
+		return this.getClass().getSimpleName() + " " + id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + id;
 		return result;
 	}
 
@@ -55,10 +65,7 @@ public abstract class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		if (id != other.id)
 			return false;
 		return true;
 	}

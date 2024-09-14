@@ -33,7 +33,7 @@ public class Game {
 
 			// Deal 10 cards to players
 			for (Player player : playerScore.keySet()) {
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < player.getMaxHandSize(); i++) {
 					player.dealCard(deck.pop());
 				}
 			}

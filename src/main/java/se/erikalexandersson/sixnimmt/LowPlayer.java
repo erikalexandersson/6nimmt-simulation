@@ -2,8 +2,8 @@ package se.erikalexandersson.sixnimmt;
 
 public class LowPlayer extends Player {
 
-	public LowPlayer(String name) {
-		super(name);
+	public LowPlayer(int id) {
+		super(id);
 	}
 
 	@Override

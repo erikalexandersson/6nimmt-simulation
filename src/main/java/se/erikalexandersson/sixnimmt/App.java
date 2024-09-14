@@ -13,12 +13,13 @@ public class App {
 		Map<Player, List<Integer>> playerScores = new HashMap<Player, List<Integer>>();
 
 		// Create players
-		Player player1 = new SimplePlayer("SimpleP 1");
-		Player player2 = new SimplePlayer("SimpleP 2");
-		Player player3 = new SimplePlayer("SimpleP 3");
-		Player player4 = new SimplePlayer("SimpleP 4");
-		Player player5 = new SimplePlayer("SimpleP 5");
-		Player player6 = new SimplePlayer("SimpleP 6");
+		Player player1 = new SimplePlayer(1);
+		Player player2 = new SimplePlayer(2);
+		Player player3 = new SimplePlayer(3);
+		Player player4 = new SimplePlayer(4);
+		Player player5 = new SimplePlayer(5);
+		Player player6 = new SimplePlayer(6);
+		player6.setMaxHandSize(15);
 
 		playerWins.put(player1, 0);
 		playerWins.put(player2, 0);
@@ -65,16 +66,16 @@ public class App {
 		}
 
 		System.out.println("-------------------------------");
-		System.out.println(String.format("%12s%12s%11s%9s%10s", "Name", "Num wins", "% of total", "mean", "std.dev."));
+		System.out.println(String.format("%20s%12s%11s%9s%10s", "Name", "Num wins", "% of total", "mean", "std.dev."));
 		playerWins.entrySet().stream().sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())).forEach(e -> {
 			double[] scores = playerScores.get(e.getKey()).stream().mapToDouble(Number::doubleValue).toArray();
 			double meanScore = mean(scores);
 			double stdDevScore = calculateStandardDeviation(scores);
-			System.out.println(String.format("%12s%12d%10.2f%%%9.1f%10.2f", e.getKey().getName(), e.getValue(),
+			System.out.println(String.format("%20s%12d%10.2f%%%9.1f%10.2f", e.getKey().getName(), e.getValue(),
 					100.0 * ((float) e.getValue() / (float) totalGames), (float) meanScore, (float) stdDevScore));
 		});
 		System.out.println(
-				String.format("%12s%12d%10.2f%%", "DRAW", draws, 100.0 * ((float) draws / (float) totalGames)));
+				String.format("%20s%12d%10.2f%%", "DRAW", draws, 100.0 * ((float) draws / (float) totalGames)));
 	}
 
 	public static double mean(double[] array) {
